@@ -5,6 +5,8 @@
 #
 # docker run -it --rm -p=1880:1880 mattwiater/alpine-armhf-node-red /bin/ash
 # docker run -d --rm -p=1880:1880 mattwiater/alpine-armhf-node-red
+#
+# Exmaple Flow: Websockets // http://flows.nodered.org/flow/8666510f94ad422e4765
 
 FROM armhf/alpine
 LABEL maintainer "matt@brightpixel.com"
