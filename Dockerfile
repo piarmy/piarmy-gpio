@@ -2,10 +2,14 @@
 #   * Updates
 #   * Base tools
 #   * Development tools
+#
+# docker run -it --rm -p=1880:1880 mattwiater/alpine-armhf-node-red /bin/ash
+# docker run -d --rm -p=1880:1880 mattwiater/alpine-armhf-node-red
 
 FROM armhf/alpine
 LABEL maintainer "matt@brightpixel.com"
 
+# Toolsets
 RUN apk update && apk upgrade && \
   apk add alpine-sdk && \
   apk add bash bash-doc bash-completion && \
@@ -18,6 +22,7 @@ RUN apk update && apk upgrade && \
 # https://github.com/rcarmo/docker-node-red/blob/master/alpine/Dockerfile
 #
 
+# Dev Toolsets
 RUN apk update \
   && apk upgrade \
   && apk add --no-cache \
@@ -28,70 +33,58 @@ RUN apk update \
     supervisor \
     nodejs \
     nodejs-dev \
-    zeromq-dev 
+    zeromq-dev
 
+# Base
 RUN npm install --loglevel verbose -g \
     node-red \
     node-red-node-daemon \
-    node-red-contrib-inotify \
-    node-red-contrib-cron \
     node-red-node-base64 \
+    node-red-node-wordpos \
+    node-red-node-exif \
     node-red-node-geohash \
     node-red-node-random \
     node-red-node-smooth \
     node-red-node-suncalc \
-    node-red-contrib-flow-dispatcher \
-    node-red-contrib-kalman \
-    node-red-contrib-msg-resend \
-    node-red-contrib-roster \
-    node-red-contrib-yield
-      
-RUN npm install --loglevel verbose -g \
-    node-red-contrib-ifttt \
     node-red-node-feedparser \
     node-red-node-twitter \
-    node-red-contrib-twitter \
-    node-red-contrib-twitter-text \
-    node-red-contrib-twitter-stream \
-    node-red-contrib-push \
-    node-red-contrib-slack \
     node-red-node-pushbullet \
     node-red-node-google \
     node-red-node-twilio \
+    node-red-node-msgpack \
+    node-red-node-openweathermap
+
+# Contribs
+RUN npm install --loglevel verbose -g \
+    node-red-contrib-inotify \
+    node-red-contrib-cron \
+    node-red-contrib-flow-dispatcher \
+    node-red-contrib-msg-resend \
+    node-red-contrib-roster \
+    node-red-contrib-yield \
+    node-red-contrib-ifttt \
+    node-red-contrib-push \
+    node-red-contrib-slack \
     node-red-contrib-shorturl \
-    node-red-contrib-wit-ai \
-    node-red-contrib-cognitive-services \
     node-red-contrib-chatbot \
-    node-red-node-wordpos \
-    node-red-node-exif \
     node-red-contrib-httpauth \
     node-red-contrib-https \
     node-red-contrib-get-feeds \
     node-red-contrib-rss \
     node-red-contrib-gzip \
-    node-red-contrib-markdown
-
-# Testing these individually to see which package breaks
-# Will rebundle them into one layer after testing.
-
-RUN npm install --loglevel verbose -node-red-dashboard 
-RUN npm install --loglevel verbose -node-red-contrib-graphs
-RUN npm install --loglevel verbose -node-red-contrib-metrics
-RUN npm install --loglevel verbose -node-red-contrib-n2n
-RUN npm install --loglevel verbose -node-red-contrib-zmq
-RUN npm install --loglevel verbose -node-red-node-msgpack
-RUN npm install --loglevel verbose -node-red-contrib-bigtimer
-RUN npm install --loglevel verbose -node-red-contrib-moment
-RUN npm install --loglevel verbose -node-red-node-openweathermap
-
-RUN rm -rf /root/.npms
+    node-red-contrib-markdown \
+    node-red-contrib-graphs \
+    node-red-contrib-metrics \
+    node-red-contrib-n2n \
+    node-red-contrib-zmq \
+    node-red-contrib-bigtimer \
+    node-red-contrib-moment \
+    node-red-contrib-socketio \
+    node-red-dashboard \
+  && rm -rf /root/.npms
 
 RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
 USER nodered
 EXPOSE 1880
-
-# docker run -it --rm -p=1880:1880 mattwiater/alpine-armhf-node-red /bin/ash
-# docker run -d --rm -p=1880:1880 mattwiater/alpine-armhf-node-red
-# openweather mattwiater / 9e08498990558442ae7d7dfbc0d7ff21
 
 CMD ["node-red"]
