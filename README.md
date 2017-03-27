@@ -8,3 +8,5 @@ docker run -it --rm -p:1880:1880 --device=/dev/ttyAMA0 --name=alpine-armhf-node-
 
 # Regular mode
 docker run -d --rm -p:1880:1880 --name=alpine-armhf-node-red mattwiater/alpine-armhf-node-red
+
+# Alpine Package Search: https://pkgs.alpinelinux.org/contents?file=videodev2.h&path=&name=&branch=&repo=&arch=armhf

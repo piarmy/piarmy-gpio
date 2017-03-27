@@ -90,8 +90,8 @@ RUN npm install --loglevel verbose -g \
 #    npm install node-red-contrib-npm
 
 
-RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
-USER nodered
+#RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
+#USER nodered
 EXPOSE 1880
 
 CMD ["node-red"]
