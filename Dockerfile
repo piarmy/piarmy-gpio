@@ -7,6 +7,7 @@
 # docker run -d --rm -p=1880:1880 mattwiater/alpine-armhf-node-red
 #
 # Exmaple Flow: Websockets // http://flows.nodered.org/flow/8666510f94ad422e4765
+# http://{server}:1880/simple
 
 FROM armhf/alpine
 LABEL maintainer "matt@brightpixel.com"
@@ -84,6 +85,10 @@ RUN npm install --loglevel verbose -g \
     node-red-contrib-socketio \
     node-red-dashboard \
   && rm -rf /root/.npms
+
+#RUN npm install --loglevel verbose -g \
+#    npm install node-red-contrib-npm
+
 
 RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
 USER nodered
