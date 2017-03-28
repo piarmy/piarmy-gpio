@@ -6,7 +6,7 @@
 # docker run -it --rm -p=1880:1880 mattwiater/alpine-armhf-node-red /bin/ash
 # docker run -d --rm -p=1880:1880 mattwiater/alpine-armhf-node-red
 #
-# Exmaple Flow: Websockets // http://flows.nodered.org/flow/8666510f94ad422e4765
+# Example Flow: Websockets // http://flows.nodered.org/flow/8666510f94ad422e4765
 # http://{server}:1880/simple
 
 FROM armhf/alpine
@@ -86,12 +86,8 @@ RUN npm install --loglevel verbose -g \
     node-red-dashboard \
   && rm -rf /root/.npms
 
-#RUN npm install --loglevel verbose -g \
-#    npm install node-red-contrib-npm
-
-
-#RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
-#USER nodered
+RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
+USER nodered
 EXPOSE 1880
 
 CMD ["node-red"]
