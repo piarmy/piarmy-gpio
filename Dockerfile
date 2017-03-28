@@ -44,16 +44,10 @@ RUN npm install --loglevel verbose -g \
     node-red-node-daemon \
     node-red-node-base64 \
     node-red-node-wordpos \
-    node-red-node-exif \
     node-red-node-geohash \
     node-red-node-random \
     node-red-node-smooth \
     node-red-node-suncalc \
-    node-red-node-feedparser \
-    node-red-node-twitter \
-    node-red-node-pushbullet \
-    node-red-node-google \
-    node-red-node-twilio \
     node-red-node-msgpack \
     node-red-node-openweathermap
 
@@ -62,20 +56,9 @@ RUN npm install --loglevel verbose -g \
     node-red-contrib-inotify \
     node-red-contrib-cron \
     node-red-contrib-flow-dispatcher \
-    node-red-contrib-msg-resend \
-    node-red-contrib-roster \
-    node-red-contrib-yield \
-    node-red-contrib-ifttt \
-    node-red-contrib-push \
-    node-red-contrib-slack \
-    node-red-contrib-shorturl \
-    node-red-contrib-chatbot \
     node-red-contrib-httpauth \
     node-red-contrib-https \
-    node-red-contrib-get-feeds \
-    node-red-contrib-rss \
     node-red-contrib-gzip \
-    node-red-contrib-markdown \
     node-red-contrib-graphs \
     node-red-contrib-metrics \
     node-red-contrib-n2n \
@@ -86,8 +69,8 @@ RUN npm install --loglevel verbose -g \
     node-red-dashboard \
   && rm -rf /root/.npms
 
-RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
-USER nodered
+#RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
+#USER nodered
 EXPOSE 1880
 
 CMD ["node-red"]
