@@ -3,8 +3,8 @@
 #   * Base tools
 #   * Development tools
 #
-# docker run -it --rm -p=1880:1880 mattwiater/alpine-armhf-node-red /bin/ash
-# docker run -d --rm -p=1880:1880 mattwiater/alpine-armhf-node-red
+# docker run -it --rm -p=1880:1880 -p=1883:1883 -p=9001:9001 mattwiater/alpine-armhf-node-red /bin/ash
+# docker run -d --rm -p=1880:1880 -p=1883:1883 -p=9001:9001 mattwiater/alpine-armhf-node-red
 #
 # Example Flow: Websockets // http://flows.nodered.org/flow/8666510f94ad422e4765
 # http://{server}:1880/simple
@@ -36,7 +36,9 @@ RUN apk update \
     supervisor \
     nodejs \
     nodejs-dev \
-    zeromq-dev
+    zeromq-dev \
+    mosquitto \
+    py-rpigpio
 
 # Base
 RUN npm install --loglevel verbose -g \
@@ -69,8 +71,13 @@ RUN npm install --loglevel verbose -g \
     node-red-dashboard \
   && rm -rf /root/.npms
 
-#RUN adduser -D -h /home/nodered -s /bin/ash -u 1001 nodered
-#USER nodered
-EXPOSE 1880
+RUN mkdir -p /mqtt/config /mqtt/data /mqtt/log && chown mosquitto:mosquitto /mqtt/*
+
+COPY config /mqtt/config
+VOLUME ["/mqtt/config", "/mqtt/data", "/mqtt/log"]
+
+EXPOSE 1883 9001 1880
+
+# /usr/sbin/mosquitto -c /mqtt/config/mosquitto.conf > /dev/null 2>&1
 
 CMD ["node-red"]
