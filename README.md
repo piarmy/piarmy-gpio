@@ -54,3 +54,5 @@ docker exec -it [container-id] bash
 https://github.com/herm/armhf-alpine-mosquitto
 docker run -it --cap-add SYS_RAWIO --device /dev/mem -p 1883:1883 -p 9001:9001 -p:1880:1880 --rm --name=alpine-armhf-node-red mattwiater/alpine-armhf-node-red /bin/bash
 
+docker run -d --cap-add SYS_RAWIO --device /dev/mem -p 1883:1883 -p 9001:9001 -p:1880:1880 --rm --name=alpine-armhf-node-red mattwiater/alpine-armhf-node-red
+
