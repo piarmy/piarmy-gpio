@@ -38,7 +38,8 @@ RUN apk update \
     nodejs-dev \
     zeromq-dev \
     mosquitto \
-    py-rpigpio
+    py-rpigpio \
+    openrc
 
 # Base
 RUN npm install --loglevel verbose -g \
@@ -51,7 +52,8 @@ RUN npm install --loglevel verbose -g \
     node-red-node-smooth \
     node-red-node-suncalc \
     node-red-node-msgpack \
-    node-red-node-openweathermap
+    node-red-node-openweathermap \
+    pm2
 
 # Contribs
 RUN npm install --loglevel verbose -g \
@@ -71,13 +73,14 @@ RUN npm install --loglevel verbose -g \
     node-red-dashboard \
   && rm -rf /root/.npms
 
-RUN mkdir -p /mqtt/config /mqtt/data /mqtt/log && chown mosquitto:mosquitto /mqtt/*
+ADD process.yml /home/process.yml
 
+RUN mkdir -p /mqtt/config /mqtt/data /mqtt/log && chown mosquitto:mosquitto /mqtt/*
 COPY config /mqtt/config
 VOLUME ["/mqtt/config", "/mqtt/data", "/mqtt/log"]
 
 EXPOSE 1883 9001 1880
 
-# /usr/sbin/mosquitto -c /mqtt/config/mosquitto.conf > /dev/null 2>&1
+#docker run -d --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=alpine-armhf-node-red mattwiater/alpine-armhf-node-red
 
-CMD ["node-red"]
+CMD ["pm2-docker", "/home/process.yml"]
