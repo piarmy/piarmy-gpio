@@ -1,0 +1,10 @@
+https://hub.docker.com/r/neonox31/node-red-smarthome/~/dockerfile/
+
+git clone https://github.com/OpenZWave/open-zwave.git /usr/src/open-zwave
+RUN cd /usr/src/open-zwave
+
+make
+
+[packages to fix make errors]
+apk add linux-headers
+apk add eudev-dev
