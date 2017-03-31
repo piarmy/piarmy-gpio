@@ -3,32 +3,23 @@
 #   * Base tools
 #   * Development tools
 #
-# docker run -it --rm -p=1880:1880 -p=1883:1883 -p=9001:9001 mattwiater/alpine-armhf-node-red /bin/ash
-# docker run -d --rm -p=1880:1880 -p=1883:1883 -p=9001:9001 mattwiater/alpine-armhf-node-red
-#
 # Example Flow: Websockets // http://flows.nodered.org/flow/8666510f94ad422e4765
 # http://{server}:1880/simple
 
 FROM armhf/alpine
 LABEL maintainer "matt@brightpixel.com"
 
+####################
 # Toolsets
 RUN apk update && apk upgrade && \
-  apk add alpine-sdk && \
-  apk add bash bash-doc bash-completion && \
-  apk add nano && \
-  apk add util-linux pciutils usbutils coreutils findutils grep && \
-  apk add build-base gcc abuild binutils binutils-doc gcc-doc && \
-  apk add man man-pages
-
-# Node Red Dockerfile
-# https://github.com/rcarmo/docker-node-red/blob/master/alpine/Dockerfile
-#
-
-# Dev Toolsets
-RUN apk update \
-  && apk upgrade \
-  && apk add --no-cache \
+  apk add alpine-sdk \
+    bash bash-doc bash-completion \
+    nano \
+    util-linux pciutils usbutils coreutils findutils grep \
+    build-base gcc abuild binutils binutils-doc gcc-doc \
+    linux-headers \
+    eudev-dev \
+    man man-pages \
     musl-dev \
     libc-dev \
     build-base \
@@ -41,8 +32,11 @@ RUN apk update \
     py-rpigpio \
     openrc
 
-# Base
+####################
+# NPM Modules
+# Node Red Nodes and Contrib
 RUN npm install --loglevel verbose -g \
+    pm2 \
     node-red \
     node-red-node-daemon \
     node-red-node-base64 \
@@ -53,10 +47,6 @@ RUN npm install --loglevel verbose -g \
     node-red-node-suncalc \
     node-red-node-msgpack \
     node-red-node-openweathermap \
-    pm2
-
-# Contribs
-RUN npm install --loglevel verbose -g \
     node-red-contrib-inotify \
     node-red-contrib-cron \
     node-red-contrib-flow-dispatcher \
@@ -73,14 +63,26 @@ RUN npm install --loglevel verbose -g \
     node-red-dashboard \
   && rm -rf /root/.npms
 
+####################
+# PM2 Config
 ADD process.yml /home/process.yml
 
+####################
+# Open Zwave
+RUN git clone https://github.com/OpenZWave/open-zwave.git /usr/src/open-zwave && \
+  cd /usr/src/open-zwave && \
+  make && \
+  make install && \
+  npm install --loglevel verbose -g node-red-contrib-openzwave
+
+####################
+# Mosquitto
 RUN mkdir -p /mqtt/config /mqtt/data /mqtt/log && chown mosquitto:mosquitto /mqtt/*
 COPY config /mqtt/config
 VOLUME ["/mqtt/config", "/mqtt/data", "/mqtt/log"]
 
+####################
+# Ports
 EXPOSE 1883 9001 1880
-
-#docker run -d --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=alpine-armhf-node-red mattwiater/alpine-armhf-node-red
 
 CMD ["pm2-docker", "/home/process.yml"]
