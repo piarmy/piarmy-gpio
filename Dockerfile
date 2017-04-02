@@ -60,6 +60,7 @@ RUN npm install --loglevel verbose -g \
     node-red-contrib-bigtimer \
     node-red-contrib-moment \
     node-red-contrib-socketio \
+    node-red-contrib-pubnub \
     node-red-dashboard \
   && rm -rf /root/.npms
 
