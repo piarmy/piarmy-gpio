@@ -70,14 +70,6 @@ RUN npm install --loglevel verbose -g \
 ADD process.yml /home/process.yml
 
 ####################
-# Open Zwave
-RUN git clone https://github.com/OpenZWave/open-zwave.git /usr/src/open-zwave && \
-  cd /usr/src/open-zwave && \
-  make && \
-  make install && \
-  npm install --loglevel verbose -g node-red-contrib-openzwave
-
-####################
 # Mosquitto
 RUN mkdir -p /mqtt/config /mqtt/data /mqtt/log && chown mosquitto:mosquitto /mqtt/*
 COPY config /mqtt/config

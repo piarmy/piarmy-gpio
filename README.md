@@ -1,4 +1,4 @@
-# rpi-node-red-ozw-gpio
+# rpi-node-red-gpio
 
 #### Premise
 ---
@@ -7,7 +7,6 @@ Built from the base [armhf/alpine](https://hub.docker.com/r/armhf/alpine/), this
 * [Mosquitto MQTT Broker](https://mosquitto.org/)
 * [RPi.GPOI(]https://pypi.python.org/pypi/RPi.GPIO)
 * [PM2](http://pm2.keymetrics.io/) for starting services in container at runtime viapm2-docker
-* [OpenZwave](https://github.com/OpenZWave/open-zwave) compile and run within the docker container
 * Node Red
   * Common Base Nodes
   * Useful Contrib Packages
@@ -41,11 +40,6 @@ Docker run parameters for access to GPIO Pins:
 --device /dev/mem
 ```
 
-Docker run parameters for access to OpenZwave:
-```
---device /dev/ttyUSB0
-```
-
 ##### Ports
 ```
 1880 # Node Red
@@ -55,10 +49,10 @@ Docker run parameters for access to OpenZwave:
 
 Interactive Mode:
 ```
-docker run -it --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem --device /dev/ttyUSB0 -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=rpi-node-red-ozw-gpio mattwiater/rpi-node-red-ozw-gpio /bin/bash
+docker run -it --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=rpi-node-red-gpio mattwiater/rpi-node-red-gpio /bin/bash
 ```
 
 Detached Mode:
 ```
-docker run -d --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem --device /dev/ttyUSB0 -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=rpi-node-red-ozw-gpio mattwiater/rpi-node-red-ozw-gpio
+docker run -d --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=rpi-node-red-gpio mattwiater/rpi-node-red-gpio
 ```
