@@ -1,4 +1,4 @@
-# Alpine-armhf-node-red
+# rpi-node-red-ozw-gpio
 
 #### Premise
 ---
@@ -55,10 +55,10 @@ Docker run parameters for access to OpenZwave:
 
 Interactive Mode:
 ```
-docker run -it --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem --device /dev/ttyUSB0 -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=alpine-armhf-node-red mattwiater/alpine-armhf-node-red /bin/bash
+docker run -it --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem --device /dev/ttyUSB0 -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=rpi-node-red-ozw-gpio mattwiater/rpi-node-red-ozw-gpio /bin/bash
 ```
 
 Detached Mode:
 ```
-docker run -d --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem --device /dev/ttyUSB0 -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=alpine-armhf-node-red mattwiater/alpine-armhf-node-red
+docker run -d --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem --device /dev/ttyUSB0 -p 1883:1883 -p 9001:9001 -p:1880:1880 --name=rpi-node-red-ozw-gpio mattwiater/rpi-node-red-ozw-gpio
 ```
