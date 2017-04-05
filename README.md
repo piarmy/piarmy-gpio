@@ -26,6 +26,14 @@ I've kept this separate as it is directly linked to the CMD statement of the Doc
 
 `CMD ["pm2-docker", "/home/process.yml"]`
 
+#### Build
+```
+docker build -t mattwiater/rpi-node-red-gpio .
+docker run -d --rm --network piarmy --cap-add SYS_RAWIO --device /dev/mem -p:1880:1880 --name=rpi-node-red-gpio mattwiater/rpi-node-red-gpio
+docker commit <imageid> mattwiater/rpi-node-red-gpio
+docker push mattwiater/rpi-node-red-gpio
+```
+
 #### Run
 ---
 As of now, outside of some hacks, it's difficult to run these as part of a Swarm due to the reliance on the --device switch which maps devices from the host to the container (See: https://github.com/docker/swarmkit/issues/1244).
