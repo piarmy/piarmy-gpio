@@ -1,5 +1,3 @@
 apps:
   - script   : 'node-red'
     name     : 'Node Red'
-  - script   : '/usr/sbin/mosquitto'
-    args     : '-v -c  /mqtt/config/mosquitto.conf'

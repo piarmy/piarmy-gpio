@@ -3,8 +3,6 @@
 #   * Base tools
 #   * Development tools
 #
-# Example Flow: Websockets // http://flows.nodered.org/flow/8666510f94ad422e4765
-# http://{server}:1880/simple
 
 FROM armhf/alpine
 LABEL maintainer "matt@brightpixel.com"
@@ -27,8 +25,6 @@ RUN apk update && apk upgrade && \
     supervisor \
     nodejs \
     nodejs-dev \
-    zeromq-dev \
-    mosquitto \
     py-rpigpio \
     openrc
 
@@ -44,9 +40,7 @@ RUN npm install --loglevel verbose -g \
     node-red-node-geohash \
     node-red-node-random \
     node-red-node-smooth \
-    node-red-node-suncalc \
     node-red-node-msgpack \
-    node-red-node-openweathermap \
     node-red-contrib-inotify \
     node-red-contrib-cron \
     node-red-contrib-flow-dispatcher \
@@ -56,11 +50,8 @@ RUN npm install --loglevel verbose -g \
     node-red-contrib-graphs \
     node-red-contrib-metrics \
     node-red-contrib-n2n \
-    node-red-contrib-zmq \
     node-red-contrib-bigtimer \
     node-red-contrib-moment \
-    node-red-contrib-socketio \
-    node-red-contrib-pubnub \
     node-red-contrib-under-query \
     node-red-dashboard \
   && rm -rf /root/.npms
@@ -70,13 +61,7 @@ RUN npm install --loglevel verbose -g \
 ADD process.yml /home/process.yml
 
 ####################
-# Mosquitto
-RUN mkdir -p /mqtt/config /mqtt/data /mqtt/log && chown mosquitto:mosquitto /mqtt/*
-COPY config /mqtt/config
-VOLUME ["/mqtt/config", "/mqtt/data", "/mqtt/log"]
-
-####################
 # Ports
-EXPOSE 1883 9001 1880
+EXPOSE 1880
 
 CMD ["pm2-docker", "/home/process.yml"]
