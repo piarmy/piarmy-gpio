@@ -58,7 +58,7 @@ RUN npm install --loglevel verbose -g \
 
 ####################
 # PM2 Config
-COPY ["container_files/ws.json", "container_files/process.yml", "/root/.node-red/"]
+COPY ["containerFiles/ws.json", "containerFiles/process.yml", "/root/.node-red/"]
 
 ####################
 # Ports
