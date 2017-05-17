@@ -1,0 +1,4 @@
+apps:
+  - script   : 'node-red'
+    name     : 'Node Red'
+    args     : '/root/.node-red/ws.json'

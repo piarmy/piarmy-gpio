@@ -58,10 +58,10 @@ RUN npm install --loglevel verbose -g \
 
 ####################
 # PM2 Config
-ADD process.yml /home/process.yml
+COPY ["container_files/ws.json", "container_files/process.yml", "/root/.node-red/"]
 
 ####################
 # Ports
 EXPOSE 1880
 
-CMD ["pm2-docker", "/home/process.yml"]
+CMD ["pm2-docker", "/root/.node-red/process.yml"]
