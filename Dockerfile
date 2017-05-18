@@ -54,11 +54,12 @@ RUN npm install --loglevel verbose -g \
     node-red-contrib-moment \
     node-red-contrib-under-query \
     node-red-dashboard \
+  && npm install --loglevel verbose --prefix ./root/.node-red lodash \
   && rm -rf /root/.npms
 
 ####################
 # PM2 Config
-COPY ["container_files/settings.js", "container_files/ws.json", "container_files/process.yml", "/root/.node-red/"]
+COPY ["containerFiles/settings.js", "containerFiles/ws.json", "containerFiles/process.yml", "/root/.node-red/"]
 
 ####################
 # Ports
