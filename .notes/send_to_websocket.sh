@@ -16,8 +16,8 @@ WS_PORT=1880
 
 # The header values to use when performing a websocket handshake.
 HS_GET="/ws/dashing"
-HS_ORIGIN="http://piarmy01"
-HS_HOST="piarmy01"
+HS_ORIGIN="http://piarmy04"
+HS_HOST="piarmy04"
 
 # This script uses a local netcat server to forward messages to the remote server.
 WS_LOCAL_PORT=6666
