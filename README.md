@@ -1,0 +1,1 @@
+docker run -d --restart=always --privileged --network host --cap-add SYS_RAWIO --device /dev/mem -p:1880:1880 --name=piarmy-gpio mattwiater/piarmy-gpio
